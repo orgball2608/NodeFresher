@@ -1,7 +1,16 @@
+//import models
+const Course = require("../models/Course");
+//import object transform
+const { multipleMongooseToObject } = require("../../util/mongoose");
 class SiteController {
   //GET /
   index(req, res) {
-    res.render("home");
+    Course.find({})
+      .then((courses) => {
+        courses = multipleMongooseToObject(courses);
+        res.render("home", { courses });
+      })
+      .catch((err) => next(err));
   }
 
   //GET /search
