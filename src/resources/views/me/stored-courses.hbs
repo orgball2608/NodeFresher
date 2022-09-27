@@ -1,41 +1,58 @@
-<table class='table'>
-    <thead>
-        <tr>
-            <th scope='col'>#</th>
-            <th scope='col'>Tên khóa học</th>
-            <th scope='col'>Trình độ</th>
-            <th scope='col' colspan='2'>Thời gian tạo</th>
-        </tr>
-    </thead>
-    <tbody>
-        {{#each courses}}
+<div class='mt-4'>
+    <div class='text-center mb-4'>
+        <h3>Khóa học của tôi</h3>
+        <a href='/me/trash/courses'>
+            Các khóa học đã xóa
+        </a>
+    </div>
+    <table class='table'>
+        <thead>
             <tr>
-
-                <th scope='row'>{{sum @index 1}}</th>
-                <td>{{this.name}}</td>
-                <td>{{this.level}}</td>
-                <td>{{this.createdAt}}</td>
-                <td>
-
-                    <a
-                        href='/courses/{{this._id}}/edit'
-                        class='btn btn-link btn-primary'
-                    >
-                        Sua
-                    </a>
-                    <a
-                        href='#'
-                        class='btn btn-primary delete-btn'
-                        data-toggle='modal'
-                        data-target='#delete-course-modal'
-                        id='delete-course-btn'
-                        data-id='{{this._id}}'
-                    >Xóa</a>
-                </td>
+                <th scope='col'>#</th>
+                <th scope='col'>Tên khóa học</th>
+                <th scope='col'>Trình độ</th>
+                <th scope='col' colspan='2'>Thời gian tạo</th>
             </tr>
-        {{/each}}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            {{#each courses}}
+                <tr>
+
+                    <th scope='row'>{{sum @index 1}}</th>
+                    <td>{{this.name}}</td>
+                    <td>{{this.level}}</td>
+                    <td>{{this.createdAt}}</td>
+                    <td>
+
+                        <a
+                            href='/courses/{{this._id}}/edit'
+                            class='btn btn-link btn-primary'
+                        >
+                            Sua
+                        </a>
+                        <a
+                            href='#'
+                            class='btn btn-primary delete-btn'
+                            data-toggle='modal'
+                            data-target='#delete-course-modal'
+                            id='delete-course-btn'
+                            data-id='{{this._id}}'
+                        >Xóa</a>
+                    </td>
+                </tr>
+            {{else}}
+                <tr>
+                    <td colspan='5' class='text-center'>
+                        Bạn chưa có khóa học nào.
+                        <a href='/courses/create'>Thêm khóa học</a>
+                    </td>
+
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+</div>
 
 {{! confirm delete course }}
 <div
@@ -83,14 +100,12 @@
 </form>
 
 <script>
-    // delete course const deleteBtns =
+    const deleteBtns =
     Array.from(document.getElementsByClassName('delete-btn')); const
     deleteConfirm = document.getElementById('delete-confirm-btn'); const
-    deleteForm = document.forms['delete-course-form'];
-    console.log(deleteConfirm); let courseId; for (const deleteBtn of
-    deleteBtns) { deleteBtn.onclick = function (e) { courseId =
-    e.target.dataset.id; deleteConfirm.onclick = function (e) {
-    deleteForm.action = `/courses/${courseId}?_method=DELETE`;
+    deleteForm = document.forms['delete-course-form']; console.log(deleteBtns);
+    let courseId; for (const deleteBtn of deleteBtns) { deleteBtn.onclick =
+    function (e) { courseId = e.target.dataset.id; deleteConfirm.onclick =
+    function (e) { deleteForm.action = `/courses/${courseId}?_method=DELETE`;
     deleteForm.submit(); }; }; }
-
 </script>

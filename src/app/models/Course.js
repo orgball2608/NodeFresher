@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const slug = require('mongoose-slug-generator');
+const mongooseDelete = require('mongoose-delete');
 mongoose.plugin(slug);
 const Schema = mongoose.Schema;
 
@@ -15,6 +16,8 @@ const Course = new Schema(
     },
     {timestamps: true}
 );
+
+Course.plugin(mongooseDelete, {overrideMethods: 'all', deletedAt: true});
 
 // Tạo model Course
 const courseModel = mongoose.model('Course', Course);

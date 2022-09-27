@@ -26,17 +26,17 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 });
 
-const deleteBtns = Array.from(document.getElementsByClassName('delete-btn'));
-const deleteConfirm = document.getElementById('delete-confirm-btn');
-const deleteForm = document.forms['delete-course-form'];
-console.log(deleteConfirm);
+const restoreConfirm = document.getElementById('restore-confirm-btn');
+const restoreForm = document.forms['restore-course-form'];
+const restoreBtns = Array.from(document.getElementsByClassName('btn-restore'));
 let courseId;
-for (const deleteBtn of deleteBtns) {
-    deleteBtn.onclick = function (e) {
+
+for (const restoreBtn of restoreBtns) {
+    restoreBtn.onclick = function (e) {
         courseId = e.target.dataset.id;
-        deleteConfirm.onclick = function (e) {
-            deleteForm.action = `/courses/${courseId}?_method=DELETE`;
-            deleteForm.submit();
+        restoreConfirm.onclick = function (e) {
+            restoreForm.action = `/courses/${courseId}/restore?_method=PATCH`;
+            restoreForm.submit();
         };
     };
 }
