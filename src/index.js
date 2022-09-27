@@ -8,11 +8,25 @@ const port = 5000;
 const router = require('./routes');
 const database = require('./config/db');
 
+//override method
+const methodOverride = require('method-override');
+
 // HTTP logger
 app.use(morgan('combined'));
 
+// override with POST having ?_method=DELETE
+app.use(methodOverride('_method'));
+
 // Template engine
-app.engine('hbs', handlebars({extname: '.hbs'}));
+app.engine(
+    'hbs',
+    handlebars({
+        extname: '.hbs',
+        helpers: {
+            sum: (a, b) => a + b,
+        },
+    })
+);
 app.set('view engine', '.hbs');
 app.set('views', path.join(__dirname, 'resources', 'views'));
 
@@ -31,7 +45,7 @@ database.connect();
 
 // Listen port
 app.listen(port, () =>
-    console.log('App is listening at http://localhost:' + port),
+    console.log('App is listening at http://localhost:' + port)
 );
 
 //#region Notes
