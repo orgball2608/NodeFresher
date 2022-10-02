@@ -1,9 +1,11 @@
 <div class='mt-4'>
     <div class='text-center mb-4'>
         <h3>Khóa học của tôi</h3>
-        <a href='/me/trash/courses'>
-            Các khóa học đã xóa
-        </a>
+        {{#if deletedCount}}
+            <a href='/me/trash/courses'>
+                Các khóa học đã xóa ({{deletedCount}})
+            </a>
+        {{/if}}
     </div>
     <table class='table'>
         <thead>

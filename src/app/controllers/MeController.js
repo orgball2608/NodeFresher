@@ -3,12 +3,14 @@ const {mongoosesToObject} = require('../../util/mongoose.js');
 
 class MeController {
     storedCourses(req, res, next) {
-        Course.find({})
-            .then((courses) => {
+        Promise.all([Course.find({}), Course.countDocumentsDeleted()])
+            .then(([courses, deletedCount]) => {
                 res.render('me/stored-courses', {
+                    deletedCount,
                     courses: mongoosesToObject(courses),
                 });
             })
+
             .catch(next);
     }
     //[GET] /me/trash/courses
